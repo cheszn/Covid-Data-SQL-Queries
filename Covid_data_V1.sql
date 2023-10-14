@@ -111,16 +111,6 @@ JOIN PortfolioProject..CovidVaccinations vac
 where dea.continent IS NOT NULL
 order by 2,3
 
----Looking at Population vs Vaccinations
-/* select dea.continent, dea.location,dea.date, dea.population, vac.new_vaccinations
-, SUM(convert(bigint, vac.new_vaccinations)) OVER (partition by dea.location 
-order by dea.location, dea.date) AS rolling_people_vaccinated
-from PortfolioProject..CovidDeaths dea
-JOIN PortfolioProject..CovidVaccinations vac
-	ON dea.location = vac.location
-	AND dea.date =vac.date
-where dea.continent IS NOT NULL
-order by 2,3 */
 
 ---USE CTE
 
