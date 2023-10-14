@@ -1,4 +1,4 @@
--- First, specify the database you want to work with
+-- Specifying the database
 USE PortfolioProject;
 
 
