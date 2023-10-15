@@ -1,3 +1,10 @@
+/*
+
+Queries used for Tableau Project
+
+*/
+
+
 USE mockaroo_sales;
 
 --1. AE VS TOTAL REVENUE GENERATED
