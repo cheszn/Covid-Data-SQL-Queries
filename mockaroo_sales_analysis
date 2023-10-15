@@ -1,0 +1,101 @@
+USE mockaroo_sales;
+
+--AE VS TOTAL REVENUE GENERATED
+SELECT opportunity_owner,
+       Sum(amount) AS total_sales
+FROM   mockaroo_sales..sales_data
+WHERE  stage = 'Closed Won'
+GROUP  BY opportunity_owner
+ORDER  BY opportunity_owner;
+
+--SALES TEAM VS CLOSED WON ANALYSIS
+SELECT territory,
+       Count(opportunity_id) AS total_opportunities,
+       Sum(amount)           AS total_sales
+FROM   mockaroo_sales..sales_data
+WHERE  stage = 'Closed Won'
+GROUP  BY territory
+ORDER  BY territory;
+
+--SALES TEAMS VS OPPORTUNITIES BOOKED
+SELECT territory             AS team,
+       Count(opportunity_id) AS total_opportunities_booked
+FROM   mockaroo_sales..sales_data
+GROUP  BY territory
+ORDER  BY territory;
+
+--SALES STAGE VS OPPORTUNITIES
+SELECT reporting_manager,
+       territory             AS team,
+       stage,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+GROUP  BY reporting_manager,
+          territory,
+          stage
+ORDER  BY reporting_manager;
+
+--NO.OF OPPORTUNITIES VS LEAD SOUCE
+SELECT lead_source,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+GROUP  BY lead_source
+ORDER  BY lead_source;
+
+--NO.OF OPPORTUNITIES CLOSED WON VS LEAD SOUCE
+SELECT lead_source,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+WHERE  stage = 'Closed Won'
+GROUP  BY lead_source
+ORDER  BY lead_source;
+
+--NO OF OPPORTUNITIES BOOKED VS OPPORTUNITY OWNER
+SELECT opportunity_owner,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+GROUP  BY opportunity_owner
+ORDER  BY opportunity_owner;
+
+--NO.OF CLOSED WON OPPORTUNITIES VS OPPORTUNITY OWNER
+SELECT opportunity_owner,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+WHERE  stage = 'Closed Won'
+GROUP  BY opportunity_owner
+ORDER  BY opportunity_owner;
+
+--AE CREATED OPPORTUNITIES - MONTHLY ANALYSIS
+SELECT opportunity_owner,
+       created_date_figures,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+--WHERE stage = 'Closed Won'
+GROUP  BY opportunity_owner,
+          created_date_figures
+ORDER  BY opportunity_owner;
+
+--AE CLOSED WON- MONTHLY ANALYSIS
+SELECT opportunity_owner,
+       created_date_figures,
+       Count(opportunity_id) AS total_opportunities
+FROM   mockaroo_sales..sales_data
+WHERE  stage = 'Closed Won'
+GROUP  BY opportunity_owner,
+          created_date_figures
+ORDER  BY opportunity_owner;
+
+--EMPLOYEE COUNT VS CLOSED WON ANALYSIS
+SELECT sd.opportunity_owner,
+       sd.stage,
+       sd.amount,
+       company.employees
+FROM   sales_data sd
+       JOIN company_info company
+         ON sd.account_id_18_digits = company.account_id_18_digits
+WHERE  sd.stage = 'Closed Won'
+GROUP  BY sd.opportunity_owner,
+          company.employees,
+          sd.stage,
+          sd.amount
+ORDER  BY sd.opportunity_owner; 
